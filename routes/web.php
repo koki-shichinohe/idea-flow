@@ -13,8 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', App\Livewire\Index::class)->name('top');
 
-Route::get('/sample', App\Livewire\Sample::class);
+Route::prefix('posts')
+    ->name('posts.')
+    ->group(static function () {
+        Route::get('', App\Livewire\Posts\Index::class)->name('index');
+        Route::get('{post}', App\Livewire\Posts\Show::class)->name('show');
+    });
+
+Route::prefix('categories')
+    ->name('categories.')
+    ->group(static function () {
+        Route::get('', App\Livewire\Categories\Index::class)->name('index');
+        Route::get('{category}', App\Livewire\Categories\Show::class)->name('show');
+    });
+
+Route::prefix('tags')
+    ->name('tags.')
+    ->group(static function () {
+        Route::get('', App\Livewire\Tags\Index::class)->name('index');
+        Route::get('{tag}', App\Livewire\Tags\Show::class)->name('show');
+    });
